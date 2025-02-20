@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.StopWatch;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -26,11 +27,12 @@ class pessimisticTicketServiceTest {
 
     private final static Integer CONCURRENT_COUNT = 100;
     private static Long TICKET_ID = null;
+    private final static StopWatch stopwatch = new StopWatch();
 
     @BeforeEach
     public void before() {
         log.info("1000개의 티켓 생성");
-        PessimisticTicket optimisticTicket = PessimisticTicket.create(1000L);
+        PessimisticTicket optimisticTicket = new PessimisticTicket(1000L);
         PessimisticTicket saved = pessimisticTicketRepository.saveAndFlush(optimisticTicket);
         TICKET_ID = saved.getId();
     }
@@ -65,7 +67,11 @@ class pessimisticTicketServiceTest {
     @Test
     @DisplayName("동시에 100명의 티켓팅 : 비관적 락")
     public void redissonTicketingTest() throws Exception {
+        stopwatch.start("동시에 100명의 티켓팅 : 비관적 락");
         ticketingTest((_no) -> pessimisticTicketService.ticketing(TICKET_ID, 1L));
+        stopwatch.stop();
+
+        System.out.println(stopwatch.prettyPrint());
     }
 
 }

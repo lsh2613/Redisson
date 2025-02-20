@@ -22,9 +22,4 @@ public class DistributedTicket implements Ticket {
     public DistributedTicket(Long quantity) {
         this.quantity = quantity;
     }
-
-    public static DistributedTicket create(Long quantity) {
-        DistributedTicket entity = new DistributedTicket(quantity);
-        return entity;
-    }
 }

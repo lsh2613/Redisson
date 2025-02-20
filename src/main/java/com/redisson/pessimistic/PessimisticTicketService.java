@@ -14,21 +14,8 @@ public class PessimisticTicketService {
 
     @Transactional
     public void ticketing(Long ticketId, Long quantity) {
-        while (true) {
-            try {
-                PessimisticTicket pessimisticTicket = pessimisticTicketRepository.findByIdWithPessimisticLock(ticketId);
-                System.out.println("pessimisticTicket = " + pessimisticTicket);
-                pessimisticTicket.decrease(quantity);
-                pessimisticTicketRepository.saveAndFlush(pessimisticTicket);
-                break;
-            } catch (ObjectOptimisticLockingFailureException e) {
-                try {
-                    log.info("티케팅에 실패했습니다..");
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        }
+        PessimisticTicket pessimisticTicket = pessimisticTicketRepository.findByIdWithPessimisticLock(ticketId);
+        pessimisticTicket.decrease(quantity);
+        pessimisticTicketRepository.saveAndFlush(pessimisticTicket);
     }
 }

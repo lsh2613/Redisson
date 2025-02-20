@@ -26,13 +26,13 @@ class DistributedTicketServiceTest {
     private DistributedTicketRepository distributedTicketRepository;
 
     private final static Integer CONCURRENT_COUNT = 100;
-    private static  Long TICKET_ID = null;
+    private static Long TICKET_ID = null;
     private final static StopWatch stopwatch = new StopWatch();
 
     @BeforeEach
     public void before() {
         log.info("1000개의 티켓 생성");
-        DistributedTicket distributedTicket = DistributedTicket.create(1000L);
+        DistributedTicket distributedTicket = new DistributedTicket(1000L);
         DistributedTicket saved = distributedTicketRepository.saveAndFlush(distributedTicket);
         TICKET_ID = saved.getId();
     }
@@ -76,7 +76,7 @@ class DistributedTicketServiceTest {
 
     @Test
     @DisplayName("동시에 100명의 티켓팅 : 분산락")
-    public void ticketingWithDistributedLock() throws Exception {DistributedTicket distributedTicket = DistributedTicket.create(1000L);
+    public void ticketingWithDistributedLock() throws Exception {
         stopwatch.start("동시에 100명의 티켓팅 : 분산락");
         ticketingTest((_no) -> distributedTicketService.ticketingWithRedisson(TICKET_ID, 1L));
         stopwatch.stop();
