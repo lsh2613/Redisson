@@ -1,4 +1,4 @@
-package com.redisson.distributed;
+package com.redisson.distributed.v1;
 
 import java.lang.annotation.*;
 

@@ -1,14 +1,16 @@
-package com.redisson.distributed;
+package com.redisson.distributed.v1;
 
+import com.redisson.distributed.DistributedTicket;
+import com.redisson.distributed.DistributedTicketRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
+import static jodd.util.ThreadUtil.sleep;
+
 @Service
 @RequiredArgsConstructor
-public class DistributedTicketService {
+public class DistributedTicketServiceV1 {
 
     private final DistributedTicketRepository distributedTicketRepository;
 
@@ -21,6 +23,8 @@ public class DistributedTicketService {
 
     @RedissonLock(value = "#ticketId")
     public void ticketingWithRedisson(Long ticketId, Long quantity) {
+        sleep(500);
+
         DistributedTicket distributedTicket = distributedTicketRepository.findById(ticketId).orElseThrow();
         distributedTicket.decrease(quantity);
         distributedTicketRepository.saveAndFlush(distributedTicket);

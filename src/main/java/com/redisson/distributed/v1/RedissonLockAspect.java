@@ -1,4 +1,4 @@
-package com.redisson.distributed;
+package com.redisson.distributed.v1;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +22,12 @@ public class RedissonLockAspect {
     private final RedissonClient redissonClient;
     private final AopForTransaction aopForTransaction;
 
-    @Around("@annotation(com.redisson.distributed.RedissonLock)")
+    @Around("@annotation(com.redisson.distributed.v1.RedissonLock)")
     public void redissonLock(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         RedissonLock annotation = method.getAnnotation(RedissonLock.class);
         String lockKey = method.getName() + CustomSpringELParser.getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), annotation.value());
-
         RLock lock = redissonClient.getLock(lockKey);
 
         try {
@@ -46,7 +45,5 @@ public class RedissonLockAspect {
             log.info("락 해제");
             lock.unlock();
         }
-
     }
-
 }

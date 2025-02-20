@@ -1,5 +1,7 @@
-package com.redisson.distributed;
+package com.redisson.distributed.v1;
 
+import com.redisson.distributed.DistributedTicket;
+import com.redisson.distributed.DistributedTicketRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,10 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 @SpringBootTest
-class DistributedTicketServiceTest {
+class DistributedTicketServiceV1Test {
 
     @Autowired
-    private DistributedTicketService distributedTicketService;
+    private DistributedTicketServiceV1 distributedTicketServiceV1;
     @Autowired
     private DistributedTicketRepository distributedTicketRepository;
 
@@ -68,7 +70,7 @@ class DistributedTicketServiceTest {
     @DisplayName("동시에 100명의 티켓팅 : 동시성 이슈")
     public void badTicketingTest() throws Exception {
         stopwatch.start("동시에 100명의 티켓팅 : 동시성 이슈");
-        ticketingTest((_no) -> distributedTicketService.ticketing(TICKET_ID, 1L));
+        ticketingTest((_no) -> distributedTicketServiceV1.ticketing(TICKET_ID, 1L));
         stopwatch.stop();
 
         System.out.println(stopwatch.prettyPrint());
@@ -78,7 +80,7 @@ class DistributedTicketServiceTest {
     @DisplayName("동시에 100명의 티켓팅 : 분산락")
     public void ticketingWithDistributedLock() throws Exception {
         stopwatch.start("동시에 100명의 티켓팅 : 분산락");
-        ticketingTest((_no) -> distributedTicketService.ticketingWithRedisson(TICKET_ID, 1L));
+        ticketingTest((_no) -> distributedTicketServiceV1.ticketingWithRedisson(TICKET_ID, 1L));
         stopwatch.stop();
 
         System.out.println(stopwatch.prettyPrint());

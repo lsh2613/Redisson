@@ -1,4 +1,4 @@
-package com.redisson.distributed;
+package com.redisson.distributed.v1;
 
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
