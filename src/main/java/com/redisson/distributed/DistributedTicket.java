@@ -1,16 +1,19 @@
 package com.redisson.distributed;
 
+import com.redisson.Ticket;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
 @Getter
 @Entity
 @NoArgsConstructor
-public class DistributedTicket {
+public class DistributedTicket implements Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,10 +27,4 @@ public class DistributedTicket {
         DistributedTicket entity = new DistributedTicket(quantity);
         return entity;
     }
-
-    public void decrease(Long quantity) {
-        long q = this.quantity - quantity;
-        this.quantity = q < 0 ? 0L : q;
-    }
-
 }

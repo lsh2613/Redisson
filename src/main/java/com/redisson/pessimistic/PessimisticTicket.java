@@ -1,15 +1,18 @@
 package com.redisson.pessimistic;
 
+import com.redisson.Ticket;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
+@Setter
 @Getter
 @Entity
 @NoArgsConstructor
 @ToString
-public class PessimisticTicket {
+public class PessimisticTicket implements Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,10 +25,4 @@ public class PessimisticTicket {
     public static PessimisticTicket create(Long quantity) {
         return new PessimisticTicket(quantity);
     }
-
-    public void decrease(Long quantity) {
-        long q = this.quantity - quantity;
-        this.quantity = q < 0 ? 0L : q;
-    }
-
 }

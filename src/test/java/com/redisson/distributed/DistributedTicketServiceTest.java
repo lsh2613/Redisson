@@ -27,6 +27,7 @@ class DistributedTicketServiceTest {
 
     private final static Integer CONCURRENT_COUNT = 100;
     private static  Long TICKET_ID = null;
+    private final static StopWatch stopwatch = new StopWatch();
 
     @BeforeEach
     public void before() {
@@ -44,8 +45,6 @@ class DistributedTicketServiceTest {
     private void ticketingTest(Consumer<Void> action) throws InterruptedException {
         Long originQuantity = distributedTicketRepository.findById(TICKET_ID).orElseThrow().getQuantity();
 
-
-
         ExecutorService executorService = Executors.newFixedThreadPool(32);
         CountDownLatch latch = new CountDownLatch(CONCURRENT_COUNT);
 
@@ -61,33 +60,27 @@ class DistributedTicketServiceTest {
 
         latch.await();
 
-
         DistributedTicket distributedTicket = distributedTicketRepository.findById(TICKET_ID).orElseThrow();
         assertEquals(originQuantity - CONCURRENT_COUNT, distributedTicket.getQuantity());
     }
 
-
     @Test
     @DisplayName("동시에 100명의 티켓팅 : 동시성 이슈")
     public void badTicketingTest() throws Exception {
-        StopWatch stopwatch = new StopWatch("동시성 이슈 발생");
         stopwatch.start("동시에 100명의 티켓팅 : 동시성 이슈");
-
         ticketingTest((_no) -> distributedTicketService.ticketing(TICKET_ID, 1L));
-
         stopwatch.stop();
+
         System.out.println(stopwatch.prettyPrint());
     }
 
     @Test
     @DisplayName("동시에 100명의 티켓팅 : 분산락")
     public void ticketingWithDistributedLock() throws Exception {DistributedTicket distributedTicket = DistributedTicket.create(1000L);
-        StopWatch stopwatch = new StopWatch("분산락");
         stopwatch.start("동시에 100명의 티켓팅 : 분산락");
-
         ticketingTest((_no) -> distributedTicketService.ticketingWithRedisson(TICKET_ID, 1L));
-
         stopwatch.stop();
+
         System.out.println(stopwatch.prettyPrint());
     }
 
