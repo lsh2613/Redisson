@@ -67,9 +67,9 @@ class DistributedTicketServiceV1Test {
     }
 
     @Test
-    @DisplayName("동시에 100명의 티켓팅 : 동시성 이슈")
+    @DisplayName("동시에 100명의 티켓팅 : 동시성 이슈 발생")
     public void badTicketingTest() throws Exception {
-        stopwatch.start("동시에 100명의 티켓팅 : 동시성 이슈");
+        stopwatch.start("동시에 100명의 티켓팅 : 동시성 이슈 발생");
         ticketingTest((_no) -> distributedTicketServiceV1.ticketing(TICKET_ID, 1L));
         stopwatch.stop();
 
