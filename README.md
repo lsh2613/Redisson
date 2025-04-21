@@ -28,6 +28,8 @@
 **[ 동시성 이슈 해결 성공 ]**
 ![image](https://github.com/user-attachments/assets/4f8b207b-d61e-403a-bfb4-354df909a5b8)
 ![image](https://github.com/user-attachments/assets/e3ced8b8-f560-43e9-accf-6d4ad09cf4a5)
+![image](https://github.com/user-attachments/assets/f4066763-58d3-43b8-93e9-0425ca0857b9)
+
 
 **[ 분산락 성능 개선 ]**
 - 성능 개선 테스트를 위해 기존(함수형 프로그래밍 적용 전)과 성능 개선(함수형 프로그래밍 적용 후) 로직에 `sleep(500)`을 적용
