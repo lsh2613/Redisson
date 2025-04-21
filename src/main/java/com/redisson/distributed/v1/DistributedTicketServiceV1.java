@@ -18,7 +18,6 @@ public class DistributedTicketServiceV1 {
     public void ticketing(Long ticketId, Long quantity) {
         DistributedTicket distributedTicket = distributedTicketRepository.findById(ticketId).orElseThrow();
         distributedTicket.decrease(quantity);
-        distributedTicketRepository.saveAndFlush(distributedTicket);
     }
 
     @RedissonLock(value = "#ticketId")
@@ -27,7 +26,6 @@ public class DistributedTicketServiceV1 {
 
         DistributedTicket distributedTicket = distributedTicketRepository.findById(ticketId).orElseThrow();
         distributedTicket.decrease(quantity);
-        distributedTicketRepository.saveAndFlush(distributedTicket);
     }
 
 }

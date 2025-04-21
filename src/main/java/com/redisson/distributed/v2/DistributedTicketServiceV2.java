@@ -28,7 +28,6 @@ public class DistributedTicketServiceV2 {
     private void ticketing(Long ticketId, Long quantity) {
         DistributedTicket distributedTicket = distributedTicketRepository.findById(ticketId).orElseThrow();
         distributedTicket.decrease(quantity);
-        distributedTicketRepository.saveAndFlush(distributedTicket);
     }
 
 }

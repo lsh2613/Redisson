@@ -13,6 +13,5 @@ public class PessimisticTicketService {
     public void ticketing(Long ticketId, Long quantity) {
         PessimisticTicket pessimisticTicket = pessimisticTicketRepository.findByIdWithPessimisticLock(ticketId);
         pessimisticTicket.decrease(quantity);
-        pessimisticTicketRepository.saveAndFlush(pessimisticTicket);
     }
 }
