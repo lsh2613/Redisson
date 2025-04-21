@@ -15,7 +15,7 @@
 - `MySQL`
 - `Docker`, `Docker Compose`
 
-## 04. 관련 이슈
+## 04. 관련 포스팅
 - [낙관적 락 vs 비관적 락 vs 분산락](https://lsh2613.tistory.com/270)
 - [함수형 프로그래밍을 적용한 분산락 성능 개선](https://lsh2613.tistory.com/271)
 
