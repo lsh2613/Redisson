@@ -1,4 +1,8 @@
 spring:
+  main:
+    banner-mode: off
+    log-startup-info: false
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/redisson?useSSL=false&allowPublicKeyRetrieval=true
@@ -13,3 +17,8 @@ spring:
       ddl-auto: create
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  level:
+    root: ERROR
+    com.redisson: INFO

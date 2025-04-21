@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.StopWatch;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -65,7 +66,12 @@ class OptimisticTicketServiceTest {
     @Test
     @DisplayName("동시에 100명의 티켓팅 : 낙관적 락")
     public void redissonTicketingTest() throws Exception {
+        StopWatch stopWatch = new StopWatch("동시에 100명의 티켓팅 : 낙관적 락");
+        stopWatch.start();
         ticketingTest((_no) -> optimisticTicketService.ticketing(TICKET_ID, 1L));
+        stopWatch.stop();
+
+        log.info(stopWatch.prettyPrint());
     }
 
 }

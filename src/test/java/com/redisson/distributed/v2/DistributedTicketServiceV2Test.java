@@ -73,7 +73,7 @@ class DistributedTicketServiceV2Test {
         ticketingTest((_no) -> distributedTicketServiceV2.ticketingWithRedisson(TICKET_ID, 1L));
         stopwatch.stop();
 
-        System.out.println(stopwatch.prettyPrint());
+        log.info(stopwatch.prettyPrint());
     }
 
 }

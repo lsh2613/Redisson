@@ -71,7 +71,7 @@ class PessimisticTicketServiceTest {
         ticketingTest((_no) -> pessimisticTicketService.ticketing(TICKET_ID, 1L));
         stopwatch.stop();
 
-        System.out.println(stopwatch.prettyPrint());
+        log.info(stopwatch.prettyPrint());
     }
 
 }

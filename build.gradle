@@ -42,3 +42,10 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.test {
+    jvmArgs "-XX:+EnableDynamicAgentLoading"
+    testLogging {
+        showStandardStreams = true
+    }
+}
