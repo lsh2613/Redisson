@@ -3,20 +3,19 @@ version: '3'
 services:
   database:
     image: mysql
-    container_name: mysql_db
+    container_name: redisson_db
     environment:
       MYSQL_DATABASE: redisson
       MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_PASSWORD: 1234
     ports:
       - "3306:3306"
-    command: ["--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
     networks:
       - my_network
 
   redis:
     image: redis:alpine
-    container_name: redis
+    container_name: redisson_redis
 #    hostname: redis
     ports:
       - "6379:6379"
