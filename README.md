@@ -17,6 +17,7 @@
 
 ## 04. 관련 포스팅
 - [낙관적 락 vs 비관적 락 vs 분산락](https://lsh2613.tistory.com/270)
+- [낙관적 락에서 조회 쿼리를 분리한 이유](https://lsh2613.tistory.com/270#%EB%82%99%EA%B4%80%EC%A0%81%20%EB%9D%BD%20%EC%A1%B0%ED%9A%8C%20%EC%BF%BC%EB%A6%AC%EB%A5%BC%20%EB%94%B0%EB%A1%9C%20%EB%B6%84%EB%A6%AC%ED%95%9C%20%EC%9D%B4%EC%9C%A0-1)
 - [함수형 프로그래밍을 적용한 분산락 성능 개선](https://lsh2613.tistory.com/271)
 
 ## 05. 시작하기
