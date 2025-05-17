@@ -44,7 +44,7 @@ class DistributedTicketServiceV1Test {
         distributedTicketRepository.deleteAll();
     }
 
-    private void ticketingTest(Consumer<Void> action) throws InterruptedException {
+    private void ticketingWithoutRedissonTest(Consumer<Void> action) throws InterruptedException {
         Long originQuantity = distributedTicketRepository.findById(TICKET_ID).orElseThrow().getQuantity();
 
         ExecutorService executorService = Executors.newFixedThreadPool(32);
@@ -68,9 +68,9 @@ class DistributedTicketServiceV1Test {
 
     @Test
     @DisplayName("동시에 100명의 티켓팅 : 동시성 이슈 발생")
-    public void badTicketingTest() throws Exception {
+    public void ticketingWithoutRedisson() throws Exception {
         stopwatch.start("동시에 100명의 티켓팅 : 동시성 이슈 발생");
-        ticketingTest((_no) -> distributedTicketServiceV1.ticketing(TICKET_ID, 1L));
+        ticketingWithoutRedissonTest((_no) -> distributedTicketServiceV1.ticketingWithoutRedisson(TICKET_ID, 1L));
         stopwatch.stop();
 
         log.info(stopwatch.prettyPrint());
@@ -80,7 +80,7 @@ class DistributedTicketServiceV1Test {
     @DisplayName("동시에 100명의 티켓팅 : 분산락")
     public void ticketingWithDistributedLock() throws Exception {
         stopwatch.start("동시에 100명의 티켓팅 : 분산락");
-        ticketingTest((_no) -> distributedTicketServiceV1.ticketingWithRedisson(TICKET_ID, 1L));
+        ticketingWithoutRedissonTest((_no) -> distributedTicketServiceV1.ticketingWithRedisson(TICKET_ID, 1L));
         stopwatch.stop();
 
         log.info(stopwatch.prettyPrint());

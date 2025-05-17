@@ -15,7 +15,7 @@ public class DistributedTicketServiceV1 {
     private final DistributedTicketRepository distributedTicketRepository;
 
     @Transactional
-    public void ticketing(Long ticketId, Long quantity) {
+    public void ticketingWithoutRedisson(Long ticketId, Long quantity) {
         DistributedTicket distributedTicket = distributedTicketRepository.findById(ticketId).orElseThrow();
         distributedTicket.decrease(quantity);
     }
