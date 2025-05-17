@@ -44,14 +44,14 @@
 - 하나의 요청은 생성한 티켓에서 수량을 1개 감소하도록 적용
 
 ### 동시성 이슈 해결 성공
-![image](https://github.com/user-attachments/assets/f4066763-58d3-43b8-93e9-0425ca0857b9)
+![image](https://github.com/user-attachments/assets/50050328-4af4-470d-8162-1c3e889cc1f5)
 ![image](https://github.com/user-attachments/assets/4f8b207b-d61e-403a-bfb4-354df909a5b8)
 ![image](https://github.com/user-attachments/assets/e3ced8b8-f560-43e9-accf-6d4ad09cf4a5)
  
 ### 결과
 | 락 유형       | 실행 시간 (초) |
 |---------------|-----------|
-| 낙관적 락    | 21.49 s   |
+| 낙관적 락    | 24.64 s   |
 | 비관적 락    | 0.40 s    |
 | 분산락       | 10.03 s   |
 - 이 프로젝트는 하나의 공유 자원을 100개의 요청에서 동시에 접근하는 나름 극단적인(?) 특징을 가진다.
