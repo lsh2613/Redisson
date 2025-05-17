@@ -27,6 +27,7 @@ class OptimisticTicketServiceTest {
 
     private final static Integer CONCURRENT_COUNT = 100;
     private static Long TICKET_ID = null;
+    private static StopWatch stopWatch = new StopWatch();
 
     @BeforeEach
     public void before() {
@@ -66,8 +67,7 @@ class OptimisticTicketServiceTest {
     @Test
     @DisplayName("동시에 100명의 티켓팅 : 낙관적 락")
     public void redissonTicketingTest() throws Exception {
-        StopWatch stopWatch = new StopWatch("동시에 100명의 티켓팅 : 낙관적 락");
-        stopWatch.start();
+        stopWatch.start("동시에 100명의 티켓팅 : 낙관적 락");
         ticketingTest((_no) -> optimisticTicketService.ticketing(TICKET_ID, 1L));
         stopWatch.stop();
 
