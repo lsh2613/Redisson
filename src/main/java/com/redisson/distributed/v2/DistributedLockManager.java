@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class LockManager {
+public class DistributedLockManager {
     private final RedissonClient redissonClient;
     private final SupplierForTransaction supplierForTransaction;
     private final String PREFIX = "RedissonLock-";

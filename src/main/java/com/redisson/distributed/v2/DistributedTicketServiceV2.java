@@ -11,13 +11,13 @@ import static jodd.util.ThreadUtil.sleep;
 @RequiredArgsConstructor
 public class DistributedTicketServiceV2 {
 
-    private final LockManager lockManager;
+    private final DistributedLockManager distributedLockManager;
     private final DistributedTicketRepository distributedTicketRepository;
 
     public void ticketingWithRedisson(Long ticketId, Long quantity) {
         sleep(500);
 
-        lockManager.lock(
+        distributedLockManager.lock(
                 String.valueOf(ticketId),
                 () -> {
                     ticketing(ticketId, quantity);
