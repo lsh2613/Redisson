@@ -44,7 +44,7 @@ class DistributedTicketServiceV2Test {
         distributedTicketRepository.deleteAll();
     }
 
-    private void ticketingTest(Consumer<Void> action) throws InterruptedException {
+    private void ticketingTest() throws InterruptedException {
         Long originQuantity = distributedTicketRepository.findById(TICKET_ID).orElseThrow().getQuantity();
 
         ExecutorService executorService = Executors.newFixedThreadPool(32);
@@ -53,7 +53,7 @@ class DistributedTicketServiceV2Test {
         for (int i = 0; i < CONCURRENT_COUNT; i++) {
             executorService.submit(() -> {
                 try {
-                    action.accept(null);
+                    distributedTicketServiceV2.ticketingWithRedisson(TICKET_ID, 1L);
                 } finally {
                     latch.countDown();
                 }
@@ -70,7 +70,7 @@ class DistributedTicketServiceV2Test {
     @DisplayName("동시에 100명의 티켓팅 : 분산락 - 함수형 프로그래밍")
     public void ticketingWithDistributedLock() throws Exception {
         stopwatch.start("동시에 100명의 티켓팅 : 분산락 - 함수형 프로그래밍");
-        ticketingTest((_no) -> distributedTicketServiceV2.ticketingWithRedisson(TICKET_ID, 1L));
+        ticketingTest();
         stopwatch.stop();
 
         log.info(stopwatch.prettyPrint());

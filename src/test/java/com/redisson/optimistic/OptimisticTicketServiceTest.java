@@ -42,7 +42,7 @@ class OptimisticTicketServiceTest {
         optimisticTicketRepository.deleteAll();
     }
 
-    private void ticketingTest(Consumer<Void> action) throws InterruptedException {
+    private void ticketingTest() throws InterruptedException {
         Long originQuantity = optimisticTicketRepository.findById(TICKET_ID).orElseThrow().getQuantity();
 
         ExecutorService executorService = Executors.newFixedThreadPool(32);
@@ -51,7 +51,7 @@ class OptimisticTicketServiceTest {
         for (int i = 0; i < CONCURRENT_COUNT; i++) {
             executorService.submit(() -> {
                 try {
-                    action.accept(null);
+                    optimisticTicketService.ticketing(TICKET_ID, 1L);
                 } finally {
                     latch.countDown();
                 }
@@ -68,7 +68,7 @@ class OptimisticTicketServiceTest {
     @DisplayName("동시에 100명의 티켓팅 : 낙관적 락")
     public void redissonTicketingTest() throws Exception {
         stopWatch.start("동시에 100명의 티켓팅 : 낙관적 락");
-        ticketingTest((_no) -> optimisticTicketService.ticketing(TICKET_ID, 1L));
+        ticketingTest();
         stopWatch.stop();
 
         log.info(stopWatch.prettyPrint());
