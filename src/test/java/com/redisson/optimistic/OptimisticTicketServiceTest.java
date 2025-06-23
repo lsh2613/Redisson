@@ -12,7 +12,6 @@ import org.springframework.util.StopWatch;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -32,7 +31,7 @@ class OptimisticTicketServiceTest {
     @BeforeEach
     public void before() {
         log.info("1000개의 티켓 생성");
-        OptimisticTicket optimisticTicket = OptimisticTicket.create(1000L);
+        OptimisticTicket optimisticTicket = OptimisticTicket.of(1000L);
         OptimisticTicket saved = optimisticTicketRepository.saveAndFlush(optimisticTicket);
         TICKET_ID = saved.getId();
     }

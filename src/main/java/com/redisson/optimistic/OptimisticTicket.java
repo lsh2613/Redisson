@@ -1,15 +1,18 @@
 package com.redisson.optimistic;
 
+import com.redisson.Ticket;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
+@Setter
 @Getter
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @ToString
-public class OptimisticTicket {
+public class OptimisticTicket implements Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,12 +21,10 @@ public class OptimisticTicket {
     @Version
     private Long version;
 
-    public OptimisticTicket(Long quantity) {
-        this.quantity = quantity;
-    }
-
-    public static OptimisticTicket create(Long quantity) {
-        return new OptimisticTicket(quantity);
+    public static OptimisticTicket of(Long quantity) {
+        OptimisticTicket ticket = new OptimisticTicket();
+        ticket.quantity = quantity;
+        return ticket;
     }
 
     public void decrease(Long quantity) {
