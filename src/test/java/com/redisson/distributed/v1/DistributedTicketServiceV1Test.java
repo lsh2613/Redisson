@@ -77,9 +77,9 @@ class DistributedTicketServiceV1Test {
     }
 
     @Test
-    @DisplayName("동시에 100명의 티켓팅 : 분산락")
+    @DisplayName("동시에 100명의 티켓팅 : 분산락 - AOP")
     public void ticketingWithDistributedLock() throws Exception {
-        stopwatch.start("동시에 100명의 티켓팅 : 분산락");
+        stopwatch.start("동시에 100명의 티켓팅 : 분산락 - AOP");
         ticketingWithoutRedissonTest((_no) -> distributedTicketServiceV1.ticketingWithRedisson(TICKET_ID, 1L));
         stopwatch.stop();
 
